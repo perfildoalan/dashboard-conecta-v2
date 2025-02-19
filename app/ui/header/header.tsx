@@ -1,5 +1,9 @@
 export default function Header() {
     return (
-        <header>Barra superior</header>
+        <header>
+            <div className="w-screen h-[80px] bg-conecta-azul">
+                Barra superior
+            </div>
+        </header>
     )
 }
