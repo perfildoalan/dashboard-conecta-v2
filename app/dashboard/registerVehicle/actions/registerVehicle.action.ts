@@ -1,12 +1,16 @@
-import { RegisterFormSchema } from '@/lib/register'
-import { RegisterVehicleFormState } from '@/lib/registerVehicle'
+'use server'
+
+import {
+  RegisterVehicleFormSchema,
+  RegisterVehicleFormState,
+} from '@/lib/registerVehicle'
 import { api } from '@/utils/api'
 
 export async function registerVehicleAction(
   state: RegisterVehicleFormState,
   formData: FormData,
 ) {
-  const validateField = RegisterFormSchema.safeParse({
+  const validateField = RegisterVehicleFormSchema.safeParse({
     brand: formData.get('brand') as string,
     model: formData.get('model') as string,
     year: Number(formData.get('year')),
@@ -21,14 +25,17 @@ export async function registerVehicleAction(
     }
   }
 
+  const { brand, model, year, engine, typeVehicle, classVehicle } =
+    validateField.data
+
   api
     .post('/registerVehicle', {
-      brand: formData.get('brand'),
-      model: formData.get('model'),
-      year: formData.get('year'),
-      engine: formData.get('engine'),
-      typeVehicle: formData.get('typeVehicle'),
-      classVehicle: formData.get('classVehicle'),
+      brand,
+      model,
+      year,
+      engine,
+      typeVehicle,
+      classVehicle,
     })
     .then(() => {
       return { message: 'Register successful' }
