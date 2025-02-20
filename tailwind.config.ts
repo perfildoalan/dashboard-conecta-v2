@@ -1,10 +1,10 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss'
 
 export default {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   darkMode: 'class',
   theme: {
@@ -20,8 +20,8 @@ export default {
         'cinza-3': '#3C4854',
         'cinza-4': '#676767',
         'cinza-5': '#A1A1A1',
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
       },
       filter: {
         'saturation-extreme': "var(--saturation-extreme)",
@@ -30,4 +30,4 @@ export default {
   },
 
   plugins: [],
-} satisfies Config;
+} satisfies Config
