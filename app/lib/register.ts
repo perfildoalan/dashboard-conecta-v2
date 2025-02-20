@@ -1,7 +1,19 @@
 import { z } from 'zod'
 
-export const NewPasswordFormSchema = z
+export const RegisterFormSchema = z
   .object({
+    name: z
+      .string()
+      .min(2, { message: 'Name must be at least 2 characters long' })
+      .max(50, { message: 'Name must be at most 50 characters long' })
+      .trim(),
+    username: z
+      .string()
+      .min(2, { message: 'Username must be at least 2 characters long' })
+      .max(50, { message: 'Username must be at most 50 characters long' })
+      .trim(),
+    email: z.string().email({ message: 'Please enter a valid email.' }).trim(),
+    typeUser: z.enum(['admin', 'user'], { message: 'Invalid user type' }),
     password: z
       .string()
       .min(8, { message: 'Be at least 8 characters long' })
@@ -23,11 +35,15 @@ export const NewPasswordFormSchema = z
     }
   })
 
-export type NewPasswordFormState =
+export type RegisterFormState =
   | {
       errors?: {
         confirmPassword?: string[]
+        email?: string[]
+        name?: string[]
         password?: string[]
+        typeUser?: string[]
+        username?: string[]
       }
       message?: string
     }
