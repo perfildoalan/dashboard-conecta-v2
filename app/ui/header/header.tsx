@@ -1,15 +1,13 @@
-import Image from 'next/image';
 import MenuBurg from "@/public/Icons/Menu.svg";
+import { IconButtom } from "./icon-buttom";
 
 export default function Header() {
     return (
         <header>
-            <div className="w-screen h-[80px] bg-conecta-azul p-[10px]">
-                <Image 
-                    src={MenuBurg} 
-                    alt="Icone de Menu"
-                    className="w-[50px] transition-all duration-500 hover:invert-[0.20]"
-                />
+            <div className="w-screen h-[80px] bg-conecta-azul">
+                <div className="">
+                    <IconButtom srcImg={MenuBurg} alt="Icone de Menu" hover={true}></IconButtom>
+                </div>
             </div>
         </header>
     )

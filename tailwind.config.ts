@@ -22,6 +22,9 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      filter: {
+        'saturation-extreme': "var(--saturation-extreme)",
+      }
     },
   },
   plugins: [],
