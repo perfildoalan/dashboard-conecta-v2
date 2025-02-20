@@ -1,3 +1,4 @@
+'use server'
 import { NewPasswordFormState, NewPasswordFormSchema } from '@/lib/newPassword'
 import { api } from '@/utils/api'
 
