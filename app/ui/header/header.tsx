@@ -6,7 +6,7 @@ export default function Header() {
         <header>
             <div className="w-screen h-[80px] bg-conecta-azul">
                 <div className="">
-                    <IconButtom srcImg={MenuBurg} alt="Icone de Menu" hover={true}></IconButtom>
+                    <IconButtom srcImg={MenuBurg} alt="Icone de Menu" hover={false}></IconButtom>
                 </div>
             </div>
         </header>

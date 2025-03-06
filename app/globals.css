@@ -8,6 +8,15 @@
   --saturation-extreme: 10000;
 }
 
+@layer utilities {
+  .mask-icon {
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: cover;
+    mask-size: cover;
+  }
+}
+
 /* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
