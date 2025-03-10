@@ -18,12 +18,12 @@ export default function Header() {
                     <Image
                         src={logoConectaDark}
                         alt="Logo do Conecta"
-                        className="justify-self-start hidden dark:block transition-all dark:max-md:hidden duration-300 hover:invert-[.10] cursor-pointer"
+                        className="justify-self-start hidden dark:block transition-all dark:max-md:hidden duration-300 hover:invert-[.10] hover:brightness-200 cursor-pointer"
                     />
                 </div>
                 <div className='flex flex-row relative max-[400px]:hidden justify-center justify-items-center items-center w-full max-w-[500px]'>
-                    <input type="text" id="site-search" className="pl-4 pr-10 rounded-3xl bg-transparent text-lg focus:outline-none border-2 border-solid border-white dark:border-conecta-azul-claro w-full" />
-                    <Search className='absolute right-4 text-white dark:text-conecta-azul-claro'/>
+                    <input type="text" id="site-search" className="pl-4 pr-10 rounded-3xl bg-transparent text-white dark:text-conecta-azul-claro text-lg focus:outline-none border-2 border-solid border-white dark:border-conecta-azul-claro w-full" />
+                    <Search className='absolute right-4 transition-colors duration-300 cursor-pointer text-white hover:text-gray-200 dark:text-conecta-azul-claro'/>
                 </div>
                 <div className='flex flex-row justify-end justify-self-end gap-4 mr-4 items-center'>
                     <Bell className="justify-self-start min-w-8 size-8 transition-colors duration-300 text-white dark:text-conecta-azul-claro hover:text-gray-200 cursor-pointer" />
