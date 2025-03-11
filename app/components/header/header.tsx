@@ -1,10 +1,21 @@
+"use client"
 import Image from 'next/image'
-
-import { Bell, Menu, Settings, Search } from "lucide-react";
-import logoConecta from "@/public/Images/logoConect2ai.svg"
-import logoConectaDark from "@/public/Images/logoConect2aiDark.svg"
+import { Bell, Menu, Settings, Search, Languages, Sun, Moon } from "lucide-react";
+import logoConecta from "@/assets/Images/logoConect2ai.svg"
+import logoConectaDark from "@/assets/Images/logoConect2aiDark.svg"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+  } from "@/components/ui/dropdown-menu"
+import { Button } from '../ui/button';
+import { useTheme } from 'next-themes';
+  
 
 export default function Header() {
+    const { setTheme, theme } = useTheme()
+
     return (
         <header>
             <div className="grid grid-cols-3 max-md:grid-cols-4 max-[400px]:grid-cols-2 md:gap-[5vw] justify-between justify-items-center items-center w-screen h-[80px] bg-conecta-azul dark:bg-conecta-azul-escuro shadow-[0px_8px_8px_rgba(0,0,0,0.10)]">
@@ -27,7 +38,25 @@ export default function Header() {
                 </div>
                 <div className='flex flex-row justify-end justify-self-end gap-4 mr-4 items-center'>
                     <Bell className="justify-self-start min-w-8 size-8 transition-colors duration-300 text-white dark:text-conecta-azul-claro hover:text-gray-200 cursor-pointer" />
-                    <Settings className="justify-self-start min-w-8 size-8 transition-colors duration-300 text-white dark:text-conecta-azul-claro hover:text-gray-200 cursor-pointer" />
+                    
+                    <DropdownMenu>
+                    <DropdownMenuTrigger>
+                        <Settings className="justify-self-start min-w-8 size-8 transition-colors duration-300 
+                        text-white dark:text-conecta-azul-claro hover:text-gray-200 cursor-pointer" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                        <DropdownMenuItem>
+                            <Languages />
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <Button variant="outline" size="icon" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
+                                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                                <span className="sr-only">Toggle theme</span>
+                            </Button>
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                    </DropdownMenu>
                 </div>
             </div>
         </header>
