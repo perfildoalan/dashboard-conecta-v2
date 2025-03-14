@@ -2,7 +2,6 @@
 import Image from 'next/image'
 import { Bell, Settings, Search, Languages, Sun, Moon } from "lucide-react";
 import logoConecta from "@/assets/Images/logoConect2ai.svg"
-import logoConectaDark from "@/assets/Images/logoConect2aiDark.svg"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -27,11 +26,6 @@ export default function Header() {
                         src={logoConecta}
                         alt="Logo do Conecta"
                         className="justify-self-start block dark:hidden transition-all max-md:hidden duration-300 hover:invert-[.10] cursor-pointer"
-                    />
-                    <Image
-                        src={logoConectaDark}
-                        alt="Logo do Conecta"
-                        className="justify-self-start hidden dark:block transition-all dark:max-md:hidden duration-300 hover:invert-[.10] hover:brightness-200 cursor-pointer"
                     />
                 </div>
                 <div className='flex flex-row max-md:col-span-2 relative max-[400px]:hidden justify-center justify-items-center items-center w-full max-w-[500px]'>
@@ -59,13 +53,13 @@ export default function Header() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
                             <DropdownMenuItem asChild>
-                                <Button variant="outline" size="icon" className=' w-full h-full border-0 py-4 px-3' >
-                                    <Languages />
+                                <Button variant="outline" size="icon" className='w-full h-full border-0' >
+                                    <Languages className='size-12'/>
                                     <span className="sr-only">Toggle theme</span>
                                 </Button>
-                            </DropdownMenuItem>
+                            </DropdownMenuItem> 
                             <DropdownMenuItem asChild>
-                                <Button className=' w-full h-full border-0 py-4 px-3' variant="outline" size="icon" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
+                                <Button className='w-full h-full border-0' variant="outline" size="icon" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
                                     <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                                     <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                                     <span className="sr-only">Toggle theme</span>

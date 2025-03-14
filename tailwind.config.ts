@@ -13,6 +13,7 @@ export default {
   			'conecta-azul': '#00ABD0',
   			'conecta-azul-claro': '#70E5FF',
   			'conecta-azul-escuro': '#00748D',
+			'conecta-azul-escuro-trans': '#00748D80',
   			secundaria: '#383838',
   			terciaria: '#001121',
   			'cinza-1': '#C0BFC0',
