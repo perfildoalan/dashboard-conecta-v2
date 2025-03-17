@@ -10,17 +10,17 @@ export default {
   theme: {
   	extend: {
   		colors: {
-  			'conecta-azul': '#00ABD0',
-  			'conecta-azul-claro': '#70E5FF',
-  			'conecta-azul-escuro': '#00748D',
-			'conecta-azul-escuro-trans': '#00748D80',
-  			secundaria: '#383838',
-  			terciaria: '#001121',
-  			'cinza-1': '#C0BFC0',
-  			'cinza-2': '#ECECEC',
-  			'cinza-3': '#3C4854',
-  			'cinza-4': '#676767',
-  			'cinza-5': '#A1A1A1',
+  			'conecta-azul': 'hsl(var(--conecta-azul))',
+  			'conecta-azul-claro': 'hsl(var(--conecta-azul-claro))',
+  			'conecta-azul-escuro': 'hsl(var(--conecta-azul-escuro))',
+			'conecta-azul-escuro-trans': 'hsl(var(--conecta-azul-escuro-trans))',
+  			secundaria: 'hsl(var(--conecta-secundaria))',
+  			terciaria: 'hsl(var(--conecta-terciaria))',
+  			'cinza-1': 'hsl(var(--conecta-cinza-claro))',
+  			'cinza-2': 'hsl(var(--conecta-cinza-mais-claro))',
+  			'cinza-3': 'hsl(var(--conecta-azul-cinzento))',
+  			'cinza-4': 'hsl(var(--conecta-azul-cinza-medio))',
+  			'cinza-5': 'hsl(var(--conecta-azul-cinza-medio-alto))',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -51,6 +51,8 @@ export default {
   				DEFAULT: 'hsl(var(--destructive))',
   				foreground: 'hsl(var(--destructive-foreground))'
   			},
+			header: 'hsl(var(--header))',
+			headerItens: 'hsl(var(--header-itens))',
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
@@ -77,9 +79,12 @@ export default {
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
-  			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
-  		}
+  			md: 'calc(var(--radius) - 4px)',
+  			sm: 'calc(var(--radius) - 8px)'
+  		},
+		transitionDuration: {
+			DEFAULT: '300ms',
+		}
   	}
   },
 
