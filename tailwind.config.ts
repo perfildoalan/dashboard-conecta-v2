@@ -14,6 +14,7 @@ export default {
   			'conecta-azul-claro': 'hsl(var(--conecta-azul-claro))',
   			'conecta-azul-escuro': 'hsl(var(--conecta-azul-escuro))',
 			'conecta-azul-escuro-trans': 'hsl(var(--conecta-azul-escuro-trans))',
+			'conecta-azul-claro-trans': 'hsl(var(--conecta-azul-claro-trans))',
   			secundaria: 'hsl(var(--conecta-secundaria))',
   			terciaria: 'hsl(var(--conecta-terciaria))',
   			'cinza-1': 'hsl(var(--conecta-cinza-claro))',

@@ -8,7 +8,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { Menu } from "lucide-react"
+import { HomeIcon, Menu } from "lucide-react"
 import { SidebarMenuButton } from "./ui/sidebar"
 
 export function SheetDemo() {
@@ -22,7 +22,10 @@ export function SheetDemo() {
           <SheetTitle className="sr-only">Edit profile</SheetTitle>
           <SheetDescription>
           </SheetDescription>
-          <SidebarMenuButton>Meu Texto</SidebarMenuButton>
+          <SidebarMenuButton>
+            <HomeIcon className=""/>
+            <div className="align-middle">Home</div>
+          </SidebarMenuButton>
         </SheetHeader>
       </SheetContent>
     </Sheet>

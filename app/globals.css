@@ -30,6 +30,7 @@
     --conecta-azul-claro: 191 100% 72%;
     --conecta-azul-escuro: 191 100% 28%;
     --conecta-azul-escuro-trans: 191, 100%, 28%, 0.5;
+    --conecta-azul-claro-trans: 191, 100%, 72%, 0.2;
     --conecta-secundaria: 0 0% 22%;
     --conecta-terciaria: 209 100% 6%;
     --conecta-cinza-claro: 300 1% 75%;
@@ -79,6 +80,7 @@
     --conecta-azul-claro: 191 100% 72%;
     --conecta-azul-escuro: 191 100% 28%;
     --conecta-azul-escuro-trans: 191, 100%, 28%, 0.5;
+    --conecta-azul-claro-trans: 191, 100%, 72%, 0.2;
     --conecta-secundaria: 0 0% 22%;
     --conecta-terciaria: 209 100% 6%;
     --conecta-cinza-claro: 300 1% 75%;
