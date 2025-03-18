@@ -21,7 +21,7 @@ export default function Header() {
 
     return (
         <header>
-            <div className="grid grid-cols-3 max-md:grid-cols-4 max-[400px]:grid-cols-2 md:gap-[5vw] justify-between justify-items-center items-center w-screen h-[80px] bg-header shadow-[0px_8px_8px_rgba(0,0,0,0.10)]">
+            <div className="grid grid-cols-3 max-md:grid-cols-4 max-[400px]:grid-cols-2 z-[1000] md:gap-[5vw] justify-between justify-items-center items-center w-screen h-[80px] bg-header shadow-[0px_8px_8px_rgba(0,0,0,0.10)]">
                 <div className='flex ml-4 gap-4 justify-start justify-self-start items-center'>
                     <SidebarProvider>
                         <SheetDemo/>
