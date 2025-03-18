@@ -13,6 +13,7 @@ import { useTheme } from 'next-themes';
 import BellCard from './bellCard';
 import { SheetDemo } from './sidebar';
 import ConectaLogo from '@/ui/header/conecta-logo';
+import { SidebarProvider } from './ui/sidebar';
   
 
 export default function Header() {
@@ -21,8 +22,10 @@ export default function Header() {
     return (
         <header>
             <div className="grid grid-cols-3 max-md:grid-cols-4 max-[400px]:grid-cols-2 md:gap-[5vw] justify-between justify-items-center items-center w-screen h-[80px] bg-header shadow-[0px_8px_8px_rgba(0,0,0,0.10)]">
-                <div className='flex flex-row ml-4 gap-4 justify-start justify-self-start items-center'>
-                    <SheetDemo/>
+                <div className='flex ml-4 gap-4 justify-start justify-self-start items-center'>
+                    <SidebarProvider>
+                        <SheetDemo/>
+                    </SidebarProvider>
                     <ConectaLogo color={(theme === 'dark' ? '#70E5FF' : 'white')} className="justify-self-start block transition-all max-md:hidden duration-300 hover:opacity-50 cursor-pointer" />
                 </div>
                 <div className='flex flex-row max-md:col-span-2 relative max-[400px]:hidden justify-center justify-items-center items-center w-full max-w-[500px]'>
