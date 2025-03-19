@@ -1,7 +1,5 @@
 "use client"
-import Image from 'next/image'
-import { Bell, Settings, Search, Languages, Sun, Moon } from "lucide-react";
-import logoConecta from "@/assets/Images/logoConect2ai.svg"
+import { Bell, Settings, Search, Languages, Sun, Moon, CircleUserRound, UserIcon, UserRound, HomeIcon, CarIcon, MapIcon, LogOutIcon, EyeIcon, UserRoundPenIcon } from "lucide-react";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -13,8 +11,7 @@ import { useTheme } from 'next-themes';
 import BellCard from './bellCard';
 import { SheetDemo } from './sidebar';
 import ConectaLogo from '@/ui/header/conecta-logo';
-import { SidebarProvider } from './ui/sidebar';
-  
+import { SidebarProvider, SidebarMenuButton } from './ui/sidebar';
 
 export default function Header() {
     const { setTheme, theme } = useTheme()
@@ -33,7 +30,7 @@ export default function Header() {
                     <Search className='absolute right-4 transition-all cursor-pointer text-headerItens hover:opacity-50'/>
                 </div>
                 <div className='flex flex-row justify-end justify-self-end gap-4 mr-4 items-center'>
-                <DropdownMenu>
+                    <DropdownMenu>
                         <DropdownMenuTrigger>
                             <Bell className="justify-self-start min-w-8 size-8 transition-all 
                              text-headerItens hover:opacity-50 cursor-pointer" />
@@ -64,6 +61,30 @@ export default function Header() {
                                     <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                                     <span className="sr-only">Toggle theme</span>
                                 </Button>
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger>
+                            <UserRound className="justify-self-start min-w-12 size-12 transition-all
+                            text-secundaria bg-cinza-1 border-4 border-headerItens rounded-full hover:opacity-50 cursor-pointer" />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="top-[12px]">
+                            <DropdownMenuItem z-50 asChild>
+                                <SidebarProvider>
+                                    <SidebarMenuButton className="w-full">
+                                        <EyeIcon className=""/>
+                                        <div className="align-middle font-regular">Visualizar</div>
+                                    </SidebarMenuButton>
+                                    <SidebarMenuButton className="w-full">
+                                        <UserRoundPenIcon className=""/>
+                                        <div className="align-middle font-regular">Editar</div>
+                                    </SidebarMenuButton>
+                                    <SidebarMenuButton className="w-full">
+                                        <LogOutIcon className=""/>
+                                        <div className="align-middle font-regular">Sair</div>
+                                    </SidebarMenuButton>
+                                </SidebarProvider>
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
