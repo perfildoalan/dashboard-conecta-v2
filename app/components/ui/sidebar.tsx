@@ -546,6 +546,7 @@ const SidebarMenuButton = React.forwardRef<
   React.ComponentProps<"button"> & {
     asChild?: boolean
     isActive?: boolean
+    noLine?: boolean
     tooltip?: string | React.ComponentProps<typeof TooltipContent>
   } & VariantProps<typeof sidebarMenuButtonVariants>
 >(
@@ -553,6 +554,7 @@ const SidebarMenuButton = React.forwardRef<
     {
       asChild = false,
       isActive = false,
+      noLine = false,
       variant = "default",
       size = "default",
       tooltip,
@@ -576,7 +578,7 @@ const SidebarMenuButton = React.forwardRef<
       >
         <div className="flex flex-col">
           <div className="flex flex-row gap-2 items-center">{children}</div> 
-          <hr className="w-0 border-y-2 opacity-50 group-hover:w-full transition-all relative bottom-0 border-t border-white" />
+          <hr className={noLine ? "hidden" : "block" + " w-0 border-y-2 opacity-50 group-hover:w-full transition-all relative bottom-0 border-t border-white"} />
         </div>
       </Comp>
     )

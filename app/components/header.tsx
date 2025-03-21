@@ -70,17 +70,22 @@ export default function Header() {
                             text-secundaria bg-cinza-1 border-4 border-headerItens rounded-full hover:opacity-50 cursor-pointer" />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="top-[12px]">
+                            <div className="flex-col gap-4 p-4 min-w-[250px]">
+                                <UserRound className="flex justify-self-center min-w-20 size-20 transition-all
+                                text-conecta-azul bg-cinza-2 border-4 border-conecta-azul rounded-full" />
+                                <p className="flex justify-self-center text-lg font-semibold text-white mt-2">Nome Sobrenome</p>
+                            </div>
                             <DropdownMenuItem z-50 asChild>
-                                <SidebarProvider>
-                                    <SidebarMenuButton className="w-full">
+                                <SidebarProvider>   
+                                    <SidebarMenuButton noLine className="w-full">
                                         <EyeIcon className=""/>
                                         <div className="align-middle font-regular">Visualizar</div>
                                     </SidebarMenuButton>
-                                    <SidebarMenuButton className="w-full">
+                                    <SidebarMenuButton noLine className="w-full">
                                         <UserRoundPenIcon className=""/>
                                         <div className="align-middle font-regular">Editar</div>
                                     </SidebarMenuButton>
-                                    <SidebarMenuButton className="w-full">
+                                    <SidebarMenuButton noLine className="w-full">
                                         <LogOutIcon className=""/>
                                         <div className="align-middle font-regular">Sair</div>
                                     </SidebarMenuButton>
