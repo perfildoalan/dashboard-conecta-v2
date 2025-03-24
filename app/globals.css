@@ -26,11 +26,24 @@
 
 @layer base {
   :root {
+    --conecta-azul: 191 100% 41%;
+    --conecta-azul-claro: 191 100% 72%;
+    --conecta-azul-escuro: 191 100% 28%;
+    --conecta-azul-escuro-trans: 191, 100%, 28%, 0.5;
+    --conecta-azul-claro-trans: 191, 100%, 72%, 0.2;
+    --conecta-secundaria: 0 0% 22%;
+    --conecta-terciaria: 209 100% 6%;
+    --conecta-cinza-claro: 300 1% 75%;
+    --conecta-cinza-mais-claro: 0 0% 93%;
+    --conecta-azul-cinzento: 210 17% 28%;
+    --conecta-azul-cinza-medio: 0 0% 40%;
+    --conecta-azul-cinza-medio-alto: 0 0% 63%;
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
+    --headerbar: 191 100% 41%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
+    --popover: 191, 100%, 28%, 0.5;
     --popover-foreground: 0 0% 3.9%;
     --primary: 0 0% 9%;
     --primary-foreground: 0 0% 98%;
@@ -59,13 +72,27 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --header: 191 100% 41%;
+    --header-itens: 0 0% 100%;
   }
   .dark {
-    --background: 0 0% 3.9%;
+    --conecta-azul: 191 100% 41%;
+    --conecta-azul-claro: 191 100% 72%;
+    --conecta-azul-escuro: 191 100% 28%;
+    --conecta-azul-escuro-trans: 191, 100%, 28%, 0.5;
+    --conecta-azul-claro-trans: 191, 100%, 72%, 0.2;
+    --conecta-secundaria: 0 0% 22%;
+    --conecta-terciaria: 209 100% 6%;
+    --conecta-cinza-claro: 300 1% 75%;
+    --conecta-cinza-mais-claro: 0 0% 93%;
+    --conecta-azul-cinzento: 210 17% 28%;
+    --conecta-azul-cinza-medio: 0 0% 40%;
+    --conecta-azul-cinza-medio-alto: 0 0% 63%;
+    --background: 0 0% 22%;
     --foreground: 0 0% 98%;
     --card: 0 0% 3.9%;
     --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
+    --popover: 191, 100%, 28%, 0.5;
     --popover-foreground: 0 0% 98%;
     --primary: 0 0% 98%;
     --primary-foreground: 0 0% 9%;
@@ -93,6 +120,8 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --header: 191 100% 28%;
+    --header-itens: 191 100% 72%;
   }
 }
 

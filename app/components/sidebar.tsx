@@ -1,3 +1,5 @@
+"use Client"
+
 import {
   Sheet,
   SheetContent,
@@ -6,21 +8,42 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { Menu } from "lucide-react"
+import { CarIcon, HomeIcon, LogOutIcon, MapIcon, Menu, SproutIcon } from "lucide-react"
+import { SidebarMenuButton } from "./ui/sidebar"
+import Link from 'next/link'
 
 export function SheetDemo() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Menu className="transition-colors duration-300 text-white dark:text-conecta-azul-claro hover:text-gray-200 cursor-pointer" />
+        <Menu className="justify-self-start min-w-10 size-10 transition-all text-headerItens hover:opacity-50 cursor-pointer" />
       </SheetTrigger>
-      <SheetContent side="left" className=" bg-red-500 w-/">
+      <SheetContent side="left" className="bg-header/90 backdrop-blur-sm w-/">
         <SheetHeader>
-          <SheetTitle className=" sr-only">Edit profile</SheetTitle>
+          <SheetTitle className="sr-only">Edit profile</SheetTitle>
           <SheetDescription>
           </SheetDescription>
+          <SidebarMenuButton>
+            <HomeIcon className=""/>
+            <div className="align-middle font-regular"><Link href="/dashboard">Home</Link></div>
+          </SidebarMenuButton>
+          <SidebarMenuButton>
+            <CarIcon className=""/>
+            <div className="align-middle font-regular"><Link href="/dashboard/vehicles">Veículos</Link></div>
+          </SidebarMenuButton>
+          <SidebarMenuButton>
+            <MapIcon className=""/>
+            <div className="align-middle font-regular"><Link href="/dashboard/trips">Viagens</Link></div>
+          </SidebarMenuButton>
+          <SidebarMenuButton>
+            <SproutIcon className=""/>
+            <div className="align-middle font-regular"><Link href="/dashboard/emissions">Emissões</Link></div>
+          </SidebarMenuButton>
+          <SidebarMenuButton>
+            <LogOutIcon className=""/>
+            <div className="align-middle font-regular">Sair</div>
+          </SidebarMenuButton>
         </SheetHeader>
-
       </SheetContent>
     </Sheet>
   )
