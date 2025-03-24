@@ -1,26 +1,34 @@
 'use client'
+import Image from "next/image"
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import LogoConect2ai from "@/assets/Images/logo.png"
+import { Button } from "@/components/ui/button";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
+import { forgotPasswordAction } from "./forgotPassword.action";
 
-import { PropsWithChildren, useActionState } from 'react'
-import { forgotPasswordAction } from './actions/forgotPassword.action'
+const initialState = {
+  message: "",
+};
 
-export default function ForgotPassword(props: PropsWithChildren) {
-  const [state, action, pending] = useActionState(
-    forgotPasswordAction,
-    undefined,
-  )
+export default function ForgotPassword() {
+    const [state, formAction] = useActionState(forgotPasswordAction, initialState)
+    const { pending } = useFormStatus();
 
   return (
-    <form action={action}>
-      {state?.errors?.email && (
-        <div className="p-4 border rounded text-contrast bg-error">
-          {state.errors.email}
-        </div>
-      )}
-      {props.children}
-
-      <button type="submit" disabled={pending}>
-        Login
-      </button>
-    </form>
+    <div className="flex text-black flex-col w-[33rem] gap-4 p-8 rounded-2xl bg-white items-center justify-center">
+        <Image src={LogoConect2ai.src} alt="" width={200} height={200}/>
+        <span className=" text-center font-xs text-xl">Plataforma de análise de dados para veículos conectados</span>
+        <form action={formAction} className=" w-full space-y-4">
+          <div className="flex flex-col">
+              <Label htmlFor="email" className="text-sm text-black/50">Email</Label>
+              <Input id="email" name="email" type="text" className="border rounded-md p-6 border-black/20"/>
+              {state?.message && <p className="text-red-500 text-sm">{state.message}</p>}
+          </div>
+          <Button disabled={pending} type="submit" className="bg-conecta-azul text-white rounded-md p-2 w-full mt-1 font-medium text-lg">Enviar</Button>
+        </form>
+    </div>
   )
 }
+
