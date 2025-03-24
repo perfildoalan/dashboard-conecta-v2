@@ -8,6 +8,7 @@ import {
   } from "@/components/ui/dropdown-menu"
 import { Button } from './ui/button';
 import { useTheme } from 'next-themes';
+import { useState, useEffect } from "react";
 import BellCard from './bellCard';
 import { SheetDemo } from './sidebar';
 import ConectaLogo from '@/ui/header/conecta-logo';
@@ -15,6 +16,11 @@ import { SidebarProvider, SidebarMenuButton } from './ui/sidebar';
 
 export default function Header() {
     const { setTheme, theme } = useTheme()
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     return (
         <header>
@@ -23,7 +29,9 @@ export default function Header() {
                     <SidebarProvider>
                         <SheetDemo/>
                     </SidebarProvider>
-                    <ConectaLogo color={(theme === 'dark' ? '#70E5FF' : 'white')} className="justify-self-start block transition-all max-md:hidden duration-300 hover:opacity-50 cursor-pointer" />
+                    {mounted && (
+                        <ConectaLogo color={(theme === 'dark' ? '#70E5FF' : 'white')} className="justify-self-start block transition-all max-md:hidden duration-300 hover:opacity-50 cursor-pointer" />
+                    )}
                 </div>
                 <div className='flex flex-row max-md:col-span-2 relative max-sm:hidden justify-center justify-items-center items-center w-full max-w-[500px]'>
                     <input type="text" id="site-search" className="pl-4 pr-10 rounded-3xl bg-transparent text-headerItens text-lg focus:outline-none border-2 border-solid border-headerItens w-full" />
@@ -41,8 +49,6 @@ export default function Header() {
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    
-                    
                     <DropdownMenu>
                         <DropdownMenuTrigger>
                             <Settings className="justify-self-start min-w-8 size-8 transition-all
