@@ -1,3 +1,4 @@
+'use client'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
@@ -6,7 +7,7 @@ import LogoConect2ai from "@/assets/Images/logo.png"
 import { registerAction } from "./register.action";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 
 const initialState = {
     message: "",
@@ -16,8 +17,13 @@ export default function RegisterPage() {
         const [state, formAction] = useActionState(registerAction, initialState)
         const { pending } = useFormStatus();
 
-        const router = useRouter();
-        const { jwt } = router.query;
+        const searchParams = useSearchParams();
+        const jwt = searchParams.get('jwt');
+
+        if(!jwt) {
+            window.location.href = "/";
+            return null;
+        }
 
     return (
         <div className="flex text-black flex-col w-[33rem] gap-4 p-8 rounded-2xl bg-white items-center justify-center">

@@ -1,4 +1,4 @@
-'user server'
+'use server'
 
 import { RegisterFormSchema } from '@/lib/register'
 import { postRequest } from '../utils/postRequest';
