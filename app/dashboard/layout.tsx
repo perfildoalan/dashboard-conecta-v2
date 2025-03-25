@@ -9,7 +9,9 @@ export default function DashboardLayout({
     <>
         <main className='flex flex-col'>
           <Header />
-          {children}
+          <div className='container mx-auto'>
+            {children}
+          </div>
         </main>
     </>
   )
