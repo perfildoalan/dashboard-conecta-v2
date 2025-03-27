@@ -100,7 +100,7 @@ export default function Vehicles() {
   const handleModelChange = (model: string) => {
     setSelectedModel(model);
     const brandData = vehicleData.brands.find((v: VehicleBrand) => v.brand === selectedBrand);
-    const modelData = brandData?.models.find((m: any) => m.model === model);
+    const modelData = brandData?.models.find((m: VehicleModel) => m.model === model);
     if (modelData) {
       setAvailableYears(modelData.years); // Definindo anos disponíveis para o modelo selecionado
       const yearData = modelData.years[0]; // Aqui, você pode ajustar conforme a lógica de ano, categoria e motor
