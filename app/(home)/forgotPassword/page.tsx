@@ -3,7 +3,9 @@
 import { PropsWithChildren, useActionState } from 'react'
 import { forgotPasswordAction } from './actions/forgotPassword.action'
 
-export default function ForgotPassword(props: PropsWithChildren) {
+export default function ForgotPassword({
+  children,
+}: PropsWithChildren) {
   const [state, action, pending] = useActionState(
     forgotPasswordAction,
     undefined,
@@ -16,7 +18,7 @@ export default function ForgotPassword(props: PropsWithChildren) {
           {state.errors.email}
         </div>
       )}
-      {props.children}
+      {children}
 
       <button type="submit" disabled={pending}>
         Login
