@@ -3,6 +3,7 @@ import { useState } from "react";
 import VehicleCard from "./ui/vehicle-card";
 import vehicleData from "./ui/vehicleData.json"; // Importando o JSON de dados
 import { ThemeProvider } from "@/components/theme-provider";
+import { LayoutGridIcon, ListIcon } from "lucide-react";
 
 interface Vehicle {
   id: number;
@@ -129,8 +130,14 @@ export default function Vehicles() {
   return (
     <>
     <ThemeProvider>
-      <h1>Veículos</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="flex w-full p-4 items-center justify-between">
+        <h1 className="font-normal text-titlePage text-3xl">Veículos</h1>
+        <div className="flex gap-4">
+          <ListIcon className="size-10 text-black/30" />
+          <LayoutGridIcon className="size-10 text-black/30" />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 mx-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
         {vehicles.map(vehicle => (
           <VehicleCard 
             key={vehicle.id} 
@@ -155,7 +162,7 @@ export default function Vehicles() {
       {/* Modal de adicionar/editar */}
       {editingVehicle && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50">
-          <div className="flex flex-col gap-8 bg-black/30 backdrop-blur-md p-6 rounded-2xl shadow-2xl w-full sm:w-2/3 max-w-2xl mx-4 sm:mx-0">
+          <div className="flex flex-col gap-8 bg-black/30 backdrop-blur-md p-6 text-white rounded-2xl shadow-2xl w-full sm:w-2/3 max-w-2xl mx-4 sm:mx-0">
             <div className="flex justify-start items-center bg-conecta-azul p-4 rounded-2xl">
               <h2 className="text-2xl font-thin">{isAdding ? "Adicionar Veículo" : "Editar Veículo"}</h2>
             </div>
@@ -225,41 +232,36 @@ export default function Vehicles() {
               {/* Cor */}
               <div className="flex flex-col sm:flex-row gap-2 bg-conecta-azul px-4 py-2 rounded-lg justify-between items-center align-middle w-full">
                 <label className="block">Cor:</label>
-                <select 
-                  className="w-full max-w-md p-2 rounded-full bg-white text-black" 
-                  value={selectedColor}
-                  onChange={(e) => handleColorChange(e.target.value)}
-                >
-                  <option value="">Selecione a cor</option>
-                  <option value="Red">Vermelho</option>
-                  <option value="Blue">Azul</option>
-                  <option value="Black">Preto</option>
-                  <option value="White">Branco</option>
-                  <option value="Silver">Prata</option>
-                </select>
+                <input 
+                  type="color" 
+                  className="w-full max-w-md h-10 px-4 rounded-full bg-white text-black" 
+                  value={editingVehicle.color || "#000000"}
+                  onChange={(e) => setEditingVehicle({ ...editingVehicle, color: e.target.value })}
+                />
               </div>
             </div>
             <div className="flex flex-col sm:flex-row justify-center gap-2 items-center mt-4 w-full">
-                <button 
-                  className="px-4 py-2 bg-green-500 text-white rounded" 
-                  onClick={() => handleSave(editingVehicle)}
-                >
-                  {isAdding ? "Adicionar" : "Salvar"}
-                </button>
-                <button 
-                  className="px-4 py-2 bg-red-500 text-white rounded" 
-                  onClick={() => {
-                    setEditingVehicle(null); // Fecha o modal
-                    setIsAdding(false); // Reseta o estado de adição
-                    setSelectedBrand(""); // Reseta a marca selecionada
-                    setSelectedModel(""); // Reseta o modelo selecionado
-                    setAvailableYears([]); // Limpar anos disponíveis
-                    setSelectedColor(""); // Limpar cor selecionada
-                  }}
-                >
-                  Cancelar
-                </button>
-              </div>
+              {/** Verificação do formulário antes de habilitar o botão **/}
+              <button 
+                className={`px-4 py-2 rounded ${selectedBrand && selectedModel && editingVehicle.year && editingVehicle.category && editingVehicle.motor && editingVehicle.color ? "bg-green-500 text-white" : "bg-gray-400 text-gray-700 cursor-not-allowed"}`} 
+                onClick={() => handleSave(editingVehicle)}
+                disabled={!(selectedBrand && selectedModel && editingVehicle.year && editingVehicle.category && editingVehicle.motor && editingVehicle.color)}
+              >
+                {isAdding ? "Adicionar" : "Salvar"}
+              </button>
+              <button 
+                className="px-4 py-2 bg-red-500 text-white rounded" 
+                onClick={() => {
+                  setEditingVehicle(null); // Fecha o modal
+                  setIsAdding(false); // Reseta o estado de adição
+                  setSelectedBrand(""); // Reseta a marca selecionada
+                  setSelectedModel(""); // Reseta o modelo selecionado
+                  setAvailableYears([]); // Limpar anos disponíveis
+                }}
+              >
+                Cancelar
+              </button>
+            </div>
           </div>
         </div>
       )}

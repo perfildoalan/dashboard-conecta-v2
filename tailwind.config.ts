@@ -54,6 +54,7 @@ export default {
   			},
 			header: 'hsl(var(--header))',
 			headerItens: 'hsl(var(--header-itens))',
+			titlePage: 'hsl(var(--title-page))',
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
