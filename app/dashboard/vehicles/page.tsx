@@ -5,6 +5,7 @@ import vehicleData from "./ui/vehicleData.json"; // Importando o JSON de dados
 import { ThemeProvider } from "@/components/theme-provider";
 import { LayoutGridIcon, ListIcon } from "lucide-react";
 
+
 interface Vehicle {
   id: number;
   color: string;
