@@ -54,10 +54,10 @@ export default function Vehicles() {
   const handleAdd = () => {
     setEditingVehicle({
       id: Date.now(),
-      color: "",  // Cor inicial vazia
+      color: "",
       brand: "",
       model: "",
-      year: "",
+      year: NaN,
       category: "",
       motor: ""
     });
@@ -155,83 +155,91 @@ export default function Vehicles() {
       {/* Modal de adicionar/editar */}
       {editingVehicle && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50">
-          <div className="flex flex-col gap-8 bg-black/30 backdrop-blur-md p-6 rounded-2xl shadow-2xl w-1/2">
+          <div className="flex flex-col gap-8 bg-black/30 backdrop-blur-md p-6 rounded-2xl shadow-2xl w-full sm:w-2/3 max-w-2xl mx-4 sm:mx-0">
             <div className="flex justify-start items-center bg-conecta-azul p-4 rounded-2xl">
               <h2 className="text-2xl font-thin">{isAdding ? "Adicionar Veículo" : "Editar Veículo"}</h2>
             </div>
-            <div className="flex flex-col justify-start items-start bg-conecta-azul p-4 rounded-2xl">
+            <div className="flex flex-col gap-4 justify-start items-start bg-black/30 backdrop-blur-md p-4 rounded-2xl">
               {/* Marca */}
-              <label className="block">Marca:</label>
-              <select 
-                className="w-full border p-2 mb-2 rounded" 
-                value={selectedBrand}
-                onChange={(e) => handleBrandChange(e.target.value)}
-              >
-                <option value="">Selecione a marca</option>
-                {vehicleData.brands.map((brandData: VehicleBrand, index) => (
-                  <option key={index} value={brandData.brand}>{brandData.brand}</option>
-                ))}
-              </select>
-
+              <div className="flex flex-col sm:flex-row gap-2 bg-conecta-azul px-4 py-2 rounded-lg justify-between items-center align-middle w-full">
+                <label className="block">Marca:</label>
+                <select 
+                  className="w-full max-w-md p-2 rounded-full bg-white text-black" 
+                  value={selectedBrand}
+                  onChange={(e) => handleBrandChange(e.target.value)}
+                >
+                  <option value="">Selecione a marca</option>
+                  {vehicleData.brands.map((brandData: VehicleBrand, index) => (
+                    <option key={index} value={brandData.brand}>{brandData.brand}</option>
+                  ))}
+                </select>
+              </div>
               {/* Modelo */}
-              <label className="block">Modelo:</label>
-              <select 
-                className="w-full border p-2 mb-2 rounded" 
-                value={selectedModel}
-                onChange={(e) => handleModelChange(e.target.value)}
-              >
-                <option value="">Selecione o modelo</option>
-                {availableModels.map((modelData, index) => (
-                  <option key={index} value={modelData.model}>{modelData.model}</option>
-                ))}
-              </select>
-
+              <div className="flex flex-col sm:flex-row gap-2 bg-conecta-azul px-4 py-2 rounded-lg justify-between items-center align-middle w-full">
+                <label className="block">Modelo:</label>
+                <select 
+                  className="w-full max-w-md p-2 rounded-full bg-white text-black" 
+                  value={selectedModel}
+                  onChange={(e) => handleModelChange(e.target.value)}
+                >
+                  <option value="">Selecione o modelo</option>
+                  {availableModels.map((modelData, index) => (
+                    <option key={index} value={modelData.model}>{modelData.model}</option>
+                  ))}
+                </select>
+              </div>
               {/* Ano */}
-              <label className="block">Ano:</label>
-              <select 
-                className="w-full border p-2 mb-2 rounded" 
-                value={editingVehicle.year}
-                onChange={(e) => handleYearChange(parseInt(e.target.value))}
-              >
-                <option value="">Selecione o ano</option>
-                {availableYears.map((yearData, index) => (
-                  <option key={index} value={yearData.year}>{yearData.year}</option>
-                ))}
-              </select>
-
+              <div className="flex flex-col sm:flex-row gap-2 bg-conecta-azul px-4 py-2 rounded-lg justify-between items-center align-middle w-full">
+                <label className="block">Ano:</label>
+                <select 
+                  className="w-full max-w-md p-2 rounded-full bg-white text-black" 
+                  value={editingVehicle.year}
+                  onChange={(e) => handleYearChange(parseInt(e.target.value))}
+                >
+                  <option value="">Selecione o ano</option>
+                  {availableYears.map((yearData, index) => (
+                    <option key={index} value={yearData.year}>{yearData.year}</option>
+                  ))}
+                </select>
+              </div>
               {/* Categoria */}
-              <label className="block">Categoria:</label>
-              <input 
-                type="text" 
-                className="w-full border p-2 mb-2 rounded" 
-                value={editingVehicle.category}
-                onChange={(e) => setEditingVehicle({ ...editingVehicle, category: e.target.value })}
-              />
+              <div className="flex flex-col sm:flex-row gap-2 bg-conecta-azul px-4 py-2 rounded-lg justify-between items-center align-middle w-full">
+                <label className="block">Categoria:</label>
+                <input 
+                  type="text" 
+                  className="w-full max-w-md p-2 rounded-full bg-white text-black" 
+                  value={editingVehicle.category}
+                  onChange={(e) => setEditingVehicle({ ...editingVehicle, category: e.target.value })}
+                />
+              </div>
               {/* Motor */}
-              <label className="block">Motor:</label>
-              <input 
-                type="text" 
-                className="w-full border p-2 mb-2 rounded" 
-                value={editingVehicle.motor}
-                onChange={(e) => setEditingVehicle({ ...editingVehicle, motor: e.target.value })}
-              />
-
+              <div className="flex flex-col sm:flex-row gap-2 bg-conecta-azul px-4 py-2 rounded-lg justify-between items-center align-middle w-full">
+                <label className="block">Motor:</label>
+                <input 
+                  type="text" 
+                  className="w-full max-w-md p-2 rounded-full bg-white text-black" 
+                  value={editingVehicle.motor}
+                  onChange={(e) => setEditingVehicle({ ...editingVehicle, motor: e.target.value })}
+                />
+              </div>
               {/* Cor */}
-              <label className="block">Cor:</label>
-              <select 
-                className="w-full border p-2 mb-2 rounded" 
-                value={selectedColor}
-                onChange={(e) => handleColorChange(e.target.value)}
-              >
-                <option value="">Selecione a cor</option>
-                <option value="Red">Vermelho</option>
-                <option value="Blue">Azul</option>
-                <option value="Black">Preto</option>
-                <option value="White">Branco</option>
-                <option value="Silver">Prata</option>
-              </select>
-
-              <div className="flex justify-center gap-2 items-center mt-4 w-full">
+              <div className="flex flex-col sm:flex-row gap-2 bg-conecta-azul px-4 py-2 rounded-lg justify-between items-center align-middle w-full">
+                <label className="block">Cor:</label>
+                <select 
+                  className="w-full max-w-md p-2 rounded-full bg-white text-black" 
+                  value={selectedColor}
+                  onChange={(e) => handleColorChange(e.target.value)}
+                >
+                  <option value="">Selecione a cor</option>
+                  <option value="Red">Vermelho</option>
+                  <option value="Blue">Azul</option>
+                  <option value="Black">Preto</option>
+                  <option value="White">Branco</option>
+                  <option value="Silver">Prata</option>
+                </select>
+              </div>
+            </div>
+            <div className="flex flex-col sm:flex-row justify-center gap-2 items-center mt-4 w-full">
                 <button 
                   className="px-4 py-2 bg-green-500 text-white rounded" 
                   onClick={() => handleSave(editingVehicle)}
@@ -252,7 +260,6 @@ export default function Vehicles() {
                   Cancelar
                 </button>
               </div>
-            </div>
           </div>
         </div>
       )}
