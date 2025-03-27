@@ -17,15 +17,19 @@ interface Vehicle {
 
 interface VehicleBrand {
   brand: string;
-  models: {
-    model: string;
-    years: {
-      year: number;
-      category: string;
-      engine_power: string;
-    }[];
-  }[];
-}
+  models: VehicleModel[]; // Array de modelos
+};
+
+interface VehicleModel {
+  model: string;
+  years: VehicleYear[]; // Array de anos
+};
+
+interface VehicleYear {
+  year: number;
+  category: string;
+  engine_power: string;
+};
 
 export default function Vehicles() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
@@ -33,9 +37,8 @@ export default function Vehicles() {
   const [isAdding, setIsAdding] = useState(false);
   const [selectedBrand, setSelectedBrand] = useState<string>("");
   const [selectedModel, setSelectedModel] = useState<string>("");
-  const [availableModels, setAvailableModels] = useState<any[]>([]);
-  const [availableYears, setAvailableYears] = useState<any[]>([]);
-  const [selectedColor, setSelectedColor] = useState<string>("");
+  const [availableModels, setAvailableModels] = useState<VehicleModel[]>([]);
+  const [availableYears, setAvailableYears] = useState<VehicleYear[]>([]);
 
   // Função para deletar um veículo
   const handleDelete = (id: number) => {
@@ -51,7 +54,6 @@ export default function Vehicles() {
     setEditingVehicle(vehicle);
     setSelectedBrand(vehicle.brand);  // Atualizando a marca
     setSelectedModel(vehicle.model);  // Atualizando o modelo
-    setSelectedColor(vehicle.color); // Atualizando a cor
     setIsAdding(false);
   };
 
@@ -83,7 +85,6 @@ export default function Vehicles() {
     setSelectedBrand(""); // Reseta a marca selecionada
     setSelectedModel(""); // Reseta o modelo selecionado
     setAvailableYears([]); // Limpar anos disponíveis
-    setSelectedColor(""); // Limpar cor selecionada
   };
 
   // Função para atualizar modelos disponíveis com base na marca
