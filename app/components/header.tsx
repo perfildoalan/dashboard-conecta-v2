@@ -1,5 +1,5 @@
 "use client"
-import { Bell, Settings, Search, Languages, Sun, Moon, CircleUserRound, UserIcon, UserRound, HomeIcon, CarIcon, MapIcon, LogOutIcon, EyeIcon, UserRoundPenIcon } from "lucide-react";
+import { Bell, Settings, Search, Languages, Sun, Moon, UserRound, LogOutIcon, EyeIcon, UserRoundPenIcon } from "lucide-react";
 import {
     DropdownMenu,
     DropdownMenuContent,

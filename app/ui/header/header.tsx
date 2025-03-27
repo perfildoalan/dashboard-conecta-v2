@@ -1,7 +1,4 @@
-import Image from 'next/image'
-
 import { Bell, Menu, Settings, Search } from "lucide-react";
-import ConectaLogo from './conecta-logo';
 
 export default function Header() {
     return (

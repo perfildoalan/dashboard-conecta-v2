@@ -10,7 +10,7 @@ interface Vehicle {
   color: string;
   brand: string;
   model: string;
-  year: number;
+  year: number | null;
   category: string;
   motor: string;
 }
@@ -23,7 +23,7 @@ interface VehicleBrand {
       year: number;
       category: string;
       engine_power: string;
-    }[]; 
+    }[];
   }[];
 }
 
@@ -39,7 +39,11 @@ export default function Vehicles() {
 
   // Função para deletar um veículo
   const handleDelete = (id: number) => {
-    setVehicles(vehicles.filter(vehicle => vehicle.id !== id));
+    setVehicles(
+      vehicles.filter(
+        vehicle => vehicle.id !== id
+      )
+    );
   };
 
   // Função para iniciar a edição de um veículo
@@ -58,7 +62,7 @@ export default function Vehicles() {
       color: "",
       brand: "",
       model: "",
-      year: NaN,
+      year: null,
       category: "",
       motor: ""
     });
@@ -86,7 +90,7 @@ export default function Vehicles() {
   const handleBrandChange = (brand: string) => {
     setSelectedBrand(brand);
     const brandData = vehicleData.brands.find((v: VehicleBrand) => v.brand === brand);
-    setAvailableModels(brandData?.models || []);
+    setAvailableModels(brandData?.models ?? []);
     setSelectedModel("");  // Resetando o modelo ao mudar a marca
     setAvailableYears([]);  // Limpar anos ao mudar a marca
   };
@@ -118,15 +122,6 @@ export default function Vehicles() {
     }));
   };
 
-  // Função para atualizar a cor selecionada
-  const handleColorChange = (color: string) => {
-    setSelectedColor(color);
-    setEditingVehicle((prevVehicle) => ({
-      ...prevVehicle!,
-      color: color,
-    }));
-  };
-
   return (
     <>
     <ThemeProvider>
@@ -154,7 +149,7 @@ export default function Vehicles() {
         ))}
       </div>
       <div className="w-full flex justify-center items-center mt-8">
-        <button className="px-4 py-2 bg-green-500 hover:bg-green-200 transition-all hover:shadow-md text-2xl text-white rounded-full mb-4" onClick={handleAdd}>
+        <button className="px-4 py-2 bg-green-500 hover:bg-green-300 transition-all hover:shadow-md text-2xl text-white rounded-full mb-4" onClick={handleAdd}>
           +
         </button>
       </div>
@@ -200,7 +195,7 @@ export default function Vehicles() {
                 <label className="block">Ano:</label>
                 <select 
                   className="w-full max-w-md p-2 rounded-full bg-white text-black" 
-                  value={editingVehicle.year}
+                  value={editingVehicle.year ?? ""}
                   onChange={(e) => handleYearChange(parseInt(e.target.value))}
                 >
                   <option value="">Selecione o ano</option>
@@ -214,6 +209,7 @@ export default function Vehicles() {
                 <label className="block">Categoria:</label>
                 <input 
                   type="text" 
+                  readOnly
                   className="w-full max-w-md p-2 rounded-full bg-white text-black" 
                   value={editingVehicle.category}
                   onChange={(e) => setEditingVehicle({ ...editingVehicle, category: e.target.value })}
@@ -224,6 +220,7 @@ export default function Vehicles() {
                 <label className="block">Motor:</label>
                 <input 
                   type="text" 
+                  readOnly
                   className="w-full max-w-md p-2 rounded-full bg-white text-black" 
                   value={editingVehicle.motor}
                   onChange={(e) => setEditingVehicle({ ...editingVehicle, motor: e.target.value })}
@@ -235,7 +232,7 @@ export default function Vehicles() {
                 <input 
                   type="color" 
                   className="w-full max-w-md h-10 px-4 rounded-full bg-white text-black" 
-                  value={editingVehicle.color || "#000000"}
+                  value={editingVehicle.color ?? "#000000"}
                   onChange={(e) => setEditingVehicle({ ...editingVehicle, color: e.target.value })}
                 />
               </div>
@@ -243,9 +240,9 @@ export default function Vehicles() {
             <div className="flex flex-col sm:flex-row justify-center gap-2 items-center mt-4 w-full">
               {/** Verificação do formulário antes de habilitar o botão **/}
               <button 
-                className={`px-4 py-2 rounded ${selectedBrand && selectedModel && editingVehicle.year && editingVehicle.category && editingVehicle.motor && editingVehicle.color ? "bg-green-500 text-white" : "bg-gray-400 text-gray-700 cursor-not-allowed"}`} 
+                className={`px-4 py-2 rounded ${selectedBrand && selectedModel && editingVehicle.year && editingVehicle.category && editingVehicle.motor ? "bg-green-500 text-white" : "bg-gray-400 text-gray-700 cursor-not-allowed"}`} 
                 onClick={() => handleSave(editingVehicle)}
-                disabled={!(selectedBrand && selectedModel && editingVehicle.year && editingVehicle.category && editingVehicle.motor && editingVehicle.color)}
+                disabled={!(selectedBrand && selectedModel && editingVehicle.year && editingVehicle.category && editingVehicle.motor)}
               >
                 {isAdding ? "Adicionar" : "Salvar"}
               </button>

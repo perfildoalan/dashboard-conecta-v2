@@ -6,11 +6,11 @@ interface VehicleCardProps {
     color: string;
     brand: string;
     model: string;
-    year: number;
+    year: number | null;
     category: string;
     motor: string;
     onDelete: (id: number) => void;
-    onEdit: (vehicle: { id: number; color: string; brand: string; model: string; year: number; category: string; motor: string; }) => void;
+    onEdit: (vehicle: { id: number; color: string; brand: string; model: string; year: number | null; category: string; motor: string; }) => void;
 }
 
 const VehicleCard: React.FC<VehicleCardProps> = ({ id, color, brand, model, year, category, motor, onDelete, onEdit }) => {
