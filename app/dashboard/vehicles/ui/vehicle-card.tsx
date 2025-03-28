@@ -15,7 +15,7 @@ interface VehicleCardProps {
 
 const VehicleCard: React.FC<VehicleCardProps> = ({ id, color, brand, model, year, category, motor, onDelete, onEdit }) => {
     return (
-        <div className='relative flex flex-wrap bg-white/30 backdrop-blur-xl gap-2 border border-conecta-azul group rounded-2xl shadow-lg hover:shadow-2xl p-4 transition-all cursor-pointer'>
+        <div className='flex flex-wrap bg-white/30 backdrop-blur-xl gap-2 border border-conecta-azul group rounded-2xl shadow-lg hover:shadow-2xl p-4 transition-all cursor-pointer'>
             <div className='flex items-center justify-center gap-4 bg-black/80 backdrop-blur-sm rounded-2xl absolute opacity-0 group-hover:opacity-100 transition-all top-0 left-0 size-full z-10'>
                 <PencilIcon 
                     onClick={() => onEdit({ id, color, brand, model, year, category, motor })}
@@ -26,11 +26,11 @@ const VehicleCard: React.FC<VehicleCardProps> = ({ id, color, brand, model, year
                     className='bg-red-500 rounded-xl p-2 size-10 text-white hover:text-secundaria hover:scale-110 transition-all cursor-pointer'
                 />
             </div>
-            <div className="flex flex-wrap gap-4 justify-center items-center w-full">
-                <div className='flex bg-white/50 backdrop-blur-xl w-full max-w-[320px] justify-center items-center rounded-2xl border-4 border-conecta-azul p-4'>
+            <div className="flex flex-row flex-wrap gap-4 justify-center items-center w-full">
+                <div className='flex flex-row bg-white/50 backdrop-blur-xl w-full max-w-60 justify-center items-center rounded-2xl border-4 border-conecta-azul p-4'>
                     <CarIcon color={color} className="size-28 mx-auto" />
                 </div>
-                <div className='flex flex-col gap-2 w-full'>
+                <div className='flex flex-col gap-2 grow min-w-0 min-[350px]:min-w-80 sm:min-w-0'>
                     <div className='flex items-start justify-start rounded-lg gap-2 px-2 bg-conecta-azul text-2xl text-conecta-azul-escuro font-normal'>
                         <p>Marca:</p><p className='text-white font-thin truncate'>{brand}</p>
                     </div>
@@ -53,3 +53,4 @@ const VehicleCard: React.FC<VehicleCardProps> = ({ id, color, brand, model, year
 };
 
 export default VehicleCard;
+

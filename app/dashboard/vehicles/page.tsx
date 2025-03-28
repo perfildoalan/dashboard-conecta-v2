@@ -3,7 +3,7 @@ import { useState } from "react";
 import VehicleCard from "./ui/vehicle-card";
 import vehicleData from "./ui/vehicleData.json"; // Importando o JSON de dados
 import { ThemeProvider } from "@/components/theme-provider";
-import { LayoutGridIcon, ListIcon } from "lucide-react";
+import { LayoutGridIcon, ListIcon, PlusIcon } from "lucide-react";
 
 
 interface Vehicle {
@@ -124,42 +124,64 @@ export default function Vehicles() {
     }));
   };
 
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+
   return (
     <>
-    <ThemeProvider>
-      <div className="flex w-full p-4 items-center justify-between">
-        <h1 className="font-normal text-titlePage text-3xl">Veículos</h1>
-        <div className="flex gap-4">
-          <ListIcon className="size-10 text-black/30" />
-          <LayoutGridIcon className="size-10 text-black/30" />
+      <ThemeProvider>
+        <div className="flex w-full p-4 items-center justify-between">
+          <h1 className="font-normal text-titlePage text-3xl">Veículos</h1>
+          <div className="flex gap-4">
+            <ListIcon
+              className={`size-10 text-black/30 cursor-pointer ${viewMode === 'list' ? 'text-conecta-azul' : ''}`}
+              onClick={() => setViewMode('list')}
+            />
+            <LayoutGridIcon
+              className={`size-10 text-black/30 cursor-pointer ${viewMode === 'grid' ? 'text-conecta-azul' : ''}`}
+              onClick={() => setViewMode('grid')}
+            />
+          </div>
         </div>
-      </div>
-      <div className="grid grid-cols-1 mx-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-        {vehicles.map(vehicle => (
-          <VehicleCard 
-            key={vehicle.id} 
-            id={vehicle.id} 
-            color={vehicle.color} 
-            brand={vehicle.brand} 
-            model={vehicle.model} 
-            year={vehicle.year} 
-            category={vehicle.category} 
-            motor={vehicle.motor} 
-            onDelete={handleDelete} 
-            onEdit={handleEdit}
-          />
-        ))}
-      </div>
-      <div className="w-full flex justify-center items-center mt-8">
-        <button className="px-4 py-2 bg-green-500 hover:bg-green-300 transition-all hover:shadow-md text-2xl text-white rounded-full mb-4" onClick={handleAdd}>
-          +
-        </button>
-      </div>
-
+        <div className={`${
+            viewMode === 'grid' 
+            ? 'grid grid-cols-1sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mx-4' 
+            : 'flex flex-col gap-4 mx-4'
+          }`}>
+          {vehicles.map(vehicle => (
+            <VehicleCard 
+              key={vehicle.id} 
+              id={vehicle.id} 
+              color={vehicle.color} 
+              brand={vehicle.brand} 
+              model={vehicle.model} 
+              year={vehicle.year} 
+              category={vehicle.category} 
+              motor={vehicle.motor} 
+              onDelete={handleDelete} 
+              onEdit={handleEdit}
+            />
+          ))}
+        </div>
+        <div className="w-full flex justify-center items-center mt-8">
+          <button className="p-4 bg-green-500 hover:bg-green-300 transition-all hover:shadow-xl rounded-full mb-4" onClick={handleAdd}>
+            <PlusIcon className="size-8 text-white" />
+          </button>
+        </div>
       {/* Modal de adicionar/editar */}
       {editingVehicle && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50">
-          <div className="scroll-styled flex flex-col gap-8 bg-black/30 backdrop-blur-md p-6 text-white rounded-2xl shadow-2xl w-full max-h-screen overflow-y-auto over sm:w-2/3 max-w-2xl mx-4 sm:mx-0">
+        <div 
+          className="fixed inset-0 flex items-center justify-center bg-black/50 z-auto"
+          onClick={(e) => {
+            // Verifica se o clique foi fora do conteúdo do popup
+            if (e.target === e.currentTarget) {
+              setEditingVehicle(null); // Fecha o modal
+              setIsAdding(false); // Reseta o estado de adição
+              setSelectedBrand(""); // Reseta a marca selecionada
+              setSelectedModel(""); // Reseta o modelo selecionado
+              setAvailableYears([]); // Limpar anos disponíveis
+            }
+          }}>
+          <div className="scroll-styled flex flex-col gap-8 bg-black/30 backdrop-blur-md p-6 text-white rounded-2xl shadow-2xl w-full max-h-[80vh] overflow-y-auto sm:w-2/3 max-w-2xl mx-4 sm:mx-0">
             <div className="flex justify-start items-center bg-conecta-azul p-4 rounded-2xl">
               <h2 className="text-2xl font-thin">{isAdding ? "Adicionar Veículo" : "Editar Veículo"}</h2>
             </div>
@@ -242,14 +264,14 @@ export default function Vehicles() {
             <div className="flex flex-col sm:flex-row justify-center gap-2 items-center mt-4 w-full">
               {/** Verificação do formulário antes de habilitar o botão **/}
               <button 
-                className={`px-4 py-2 rounded ${selectedBrand && selectedModel && editingVehicle.year && editingVehicle.category && editingVehicle.motor ? "bg-green-500 text-white" : "bg-gray-400 text-gray-700 cursor-not-allowed"}`} 
+                className={`px-4 py-2 rounded ${selectedBrand && selectedModel && editingVehicle.year && editingVehicle.category && editingVehicle.motor && editingVehicle.color ? "bg-green-500 hover:bg-green-400 transition-colors text-white" : "bg-gray-400 text-gray-700 cursor-not-allowed"}`} 
                 onClick={() => handleSave(editingVehicle)}
-                disabled={!(selectedBrand && selectedModel && editingVehicle.year && editingVehicle.category && editingVehicle.motor)}
+                disabled={!(selectedBrand && selectedModel && editingVehicle.year && editingVehicle.category && editingVehicle.motor && editingVehicle.color)}
               >
                 {isAdding ? "Adicionar" : "Salvar"}
               </button>
               <button 
-                className="px-4 py-2 bg-red-500 text-white rounded" 
+                className="px-4 py-2 bg-red-500 hover:bg-red-400 transition-colors text-white rounded" 
                 onClick={() => {
                   setEditingVehicle(null); // Fecha o modal
                   setIsAdding(false); // Reseta o estado de adição
