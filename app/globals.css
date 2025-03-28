@@ -137,3 +137,23 @@
     @apply bg-background text-foreground;
   }
 }
+
+.scroll-styled::-webkit-scrollbar {
+  width: 10px; /* Largura da barra de rolagem */
+  background: transparent; /* Cor de fundo (transparente) */
+}
+
+.scroll-styled::-webkit-scrollbar-thumb {
+  background-color: #00ABD0; /* Cor azul para a thumb */
+  border-radius: 3px; /* Borda arredondada */
+}
+
+/* Adiciona um efeito ao passar o mouse sobre a thumb */
+.scroll-styled::-webkit-scrollbar-thumb:hover {
+  background-color: #70E5FF; /* Azul claro ao passar o mouse */
+}
+
+.scroll-styled {
+  scrollbar-width: bold; /* Define a largura como fina */
+  scrollbar-color: #00ABD0 transparent;
+}

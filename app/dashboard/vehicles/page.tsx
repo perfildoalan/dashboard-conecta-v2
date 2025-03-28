@@ -159,7 +159,7 @@ export default function Vehicles() {
       {/* Modal de adicionar/editar */}
       {editingVehicle && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50">
-          <div className="flex flex-col gap-8 bg-black/30 backdrop-blur-md p-6 text-white rounded-2xl shadow-2xl w-full sm:w-2/3 max-w-2xl mx-4 sm:mx-0">
+          <div className="scroll-styled flex flex-col gap-8 bg-black/30 backdrop-blur-md p-6 text-white rounded-2xl shadow-2xl w-full max-h-screen overflow-y-auto over sm:w-2/3 max-w-2xl mx-4 sm:mx-0">
             <div className="flex justify-start items-center bg-conecta-azul p-4 rounded-2xl">
               <h2 className="text-2xl font-thin">{isAdding ? "Adicionar Veículo" : "Editar Veículo"}</h2>
             </div>
