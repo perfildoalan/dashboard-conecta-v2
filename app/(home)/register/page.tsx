@@ -8,6 +8,7 @@ import { registerAction } from "./register.action";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { useSearchParams } from 'next/navigation';
+import Link from "next/link";
 
 const initialState = {
     message: "",
@@ -62,11 +63,12 @@ export default function RegisterPage() {
 
           <div className="flex flex-col sr-only">
               <Label htmlFor="jwt" className="text-sm text-black/50">jwt</Label>
-              <Input id="jwt" name="jwt" type="text" value={jwt} className="border rounded-md p-6 border-black/20"/>
+              <Input id="jwt" name="jwt" type="text" value={jwt} className="border rounded-md sr-only p-6 border-black/20"/>
           </div>
           {state?.message && <p className="text-red-500 text-sm">{state.message}</p>}
           <Button disabled={pending} type="submit" className="bg-conecta-azul text-white rounded-md p-2 w-full mt-1 font-medium text-lg">Confirmar</Button>
         </form>
+        <p className=" font-medium text-base text-black/60"><Link href="/register" className="font-bold hover:text-black/80">Volte para o Login</Link></p>
     </div>
     )
 }

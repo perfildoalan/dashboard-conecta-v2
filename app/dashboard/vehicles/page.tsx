@@ -1,9 +1,12 @@
 "use client";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import VehicleCard from "./ui/vehicle-card";
-import vehicleData from "./ui/vehicleData.json"; // Importando o JSON de dados
 import { ThemeProvider } from "@/components/theme-provider";
 import { LayoutGridIcon, ListIcon, PlusIcon } from "lucide-react";
+import { getRequest } from "../utils/getRequest";
+import { deleteRequest } from "../utils/deleteRequeste";
+import { postRequest } from "../utils/postRequest";
 
 
 interface Vehicle {
@@ -11,120 +14,62 @@ interface Vehicle {
   color: string;
   brand: string;
   model: string;
-  year: number | null;
+  year: number ;
   category: string;
-  motor: string;
+  version: string;
 }
 
-interface VehicleBrand {
-  brand: string;
-  models: VehicleModel[]; // Array de modelos
-};
-
-interface VehicleModel {
-  model: string;
-  years: VehicleYear[]; // Array de anos
-};
-
-interface VehicleYear {
-  year: number;
-  category: string;
-  engine_power: string;
-};
+interface VehicleData {
+  version?: string[];
+  brand?: string[];
+  model?: string[];
+  year?: number[];
+  id?: number;
+  category?: string[];
+}
 
 export default function Vehicles() {
-  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
-  const [editingVehicle, setEditingVehicle] = useState<Vehicle | null>(null);
+  const [vehicle, setVehicle] = useState<Vehicle>();
+  const [userVehicles, setUserVehicles] = useState<Vehicle[]>();
   const [isAdding, setIsAdding] = useState(false);
-  const [selectedBrand, setSelectedBrand] = useState<string>("");
-  const [selectedModel, setSelectedModel] = useState<string>("");
-  const [availableModels, setAvailableModels] = useState<VehicleModel[]>([]);
-  const [availableYears, setAvailableYears] = useState<VehicleYear[]>([]);
+  const [availableVehicleData, setAvailableVehicleData] = useState<VehicleData | undefined>();
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
 
-  // Função para deletar um veículo
-  const handleDelete = (id: number) => {
-    setVehicles(
-      vehicles.filter(
-        vehicle => vehicle.id !== id
-      )
-    );
+  const handleDelete = async (id: number) => {
+    await deleteRequest(`/v1/user-area/vehicle/unregister/${id}`, {}, 'force-cache');
   };
 
-  // Função para iniciar a edição de um veículo
-  const handleEdit = (vehicle: Vehicle) => {
-    setEditingVehicle(vehicle);
-    setSelectedBrand(vehicle.brand);  // Atualizando a marca
-    setSelectedModel(vehicle.model);  // Atualizando o modelo
-    setIsAdding(false);
-  };
 
-  // Função para adicionar um novo veículo
-  const handleAdd = () => {
-    setEditingVehicle({
-      id: Date.now(),
-      color: "",
-      brand: "",
-      model: "",
-      year: null,
-      category: "",
-      motor: ""
-    });
-    setIsAdding(true);
-  };
-
-  // Função para salvar as edições ou adições
-  const handleSave = (updatedVehicle: Vehicle) => {
-    if (isAdding) {
-      setVehicles([...vehicles, updatedVehicle]);
-    } else {
-      setVehicles(vehicles.map(vehicle => vehicle.id === updatedVehicle.id ? updatedVehicle : vehicle));
-    }
-
-    // Limpar os estados após salvar/adicionar
-    setEditingVehicle(null); // Fecha o modal
-    setIsAdding(false); // Reseta o estado de adição
-    setSelectedBrand(""); // Reseta a marca selecionada
-    setSelectedModel(""); // Reseta o modelo selecionado
-    setAvailableYears([]); // Limpar anos disponíveis
-  };
-
-  // Função para atualizar modelos disponíveis com base na marca
-  const handleBrandChange = (brand: string) => {
-    setSelectedBrand(brand);
-    const brandData = vehicleData.brands.find((v: VehicleBrand) => v.brand === brand);
-    setAvailableModels(brandData?.models ?? []);
-    setSelectedModel("");  // Resetando o modelo ao mudar a marca
-    setAvailableYears([]);  // Limpar anos ao mudar a marca
-  };
-
-  // Função para atualizar o modelo selecionado
-  const handleModelChange = (model: string) => {
-    setSelectedModel(model);
-    const brandData = vehicleData.brands.find((v: VehicleBrand) => v.brand === selectedBrand);
-    const modelData = brandData?.models.find((m: VehicleModel) => m.model === model);
-    if (modelData) {
-      setAvailableYears(modelData.years); // Definindo anos disponíveis para o modelo selecionado
-      const yearData = modelData.years[0]; // Aqui, você pode ajustar conforme a lógica de ano, categoria e motor
-      setEditingVehicle((prevVehicle) => ({
-        ...prevVehicle!,
-        brand: brandData?.brand ?? "",
-        model: modelData.model,
-        year: yearData.year,
-        category: yearData.category,
-        motor: yearData.engine_power,
-      }));
-    }
-  };
-
-  // Função para atualizar o ano selecionado
-  const handleYearChange = (year: number) => {
-    setEditingVehicle((prevVehicle) => ({
-      ...prevVehicle!,
-      year: year,
+  const getAllBrand = async () => {
+    const data = await getRequest('/v1/user-area/vehicle/unique-brands');
+    setAvailableVehicleData((prevData: VehicleData | undefined) => ({
+      ...prevData,
+      brand: data
     }));
   };
 
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const getAllUserCar = async () => {
+    const data = await getRequest('/v1/user-area/vehicle/user-vehicles');
+    setUserVehicles(data);
+  };
+
+  const getDataVehicle = async ({ version, model, brand, year, category }: Partial<Vehicle>) => {
+      const data = await getRequest(`/v1/user-area/vehicle/?${brand}&${model}&${year}&${version}&${category}`);
+      setAvailableVehicleData(data);
+    };
+
+  const handleSave = async (vehicle: Vehicle) => {
+    await postRequest(`/v1/user-area/vehicle/register/${vehicle.id}`);
+    setVehicle({} as Vehicle); // Fecha o modal
+    setIsAdding(false); // Reseta o estado de adição
+  };
+
+  useEffect(() => {
+    getAllBrand();
+    getAllUserCar()
+  },[])
+
+
 
   return (
     <>
@@ -147,7 +92,7 @@ export default function Vehicles() {
             ? 'grid grid-cols-1sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mx-4' 
             : 'flex flex-col gap-4 mx-4'
           }`}>
-          {vehicles.map(vehicle => (
+            {userVehicles?.map(vehicle => (
             <VehicleCard 
               key={vehicle.id} 
               id={vehicle.id} 
@@ -156,29 +101,26 @@ export default function Vehicles() {
               model={vehicle.model} 
               year={vehicle.year} 
               category={vehicle.category} 
-              motor={vehicle.motor} 
-              onDelete={handleDelete} 
-              onEdit={handleEdit}
+              motor={vehicle.version} 
+              onDelete={() => handleDelete(vehicle.id)}
+              onEdit={() => setVehicle(vehicle)}
             />
-          ))}
+            ))}
         </div>
         <div className="w-full flex justify-center items-center mt-8">
-          <button className="p-4 bg-green-500 hover:bg-green-300 transition-all hover:shadow-xl rounded-full mb-4" onClick={handleAdd}>
-            <PlusIcon className="size-8 text-white" />
-          </button>
+            <button className="p-4 bg-green-500 hover:bg-green-300 transition-all hover:shadow-xl rounded-full mb-4" onClick={() => {setIsAdding(true)}}>
+              <PlusIcon className="size-8 text-white" />
+            </button>
         </div>
       {/* Modal de adicionar/editar */}
-      {editingVehicle && (
+      {vehicle && (
         <div 
           className="fixed inset-0 flex items-center justify-center bg-black/50 z-auto"
           onClick={(e) => {
             // Verifica se o clique foi fora do conteúdo do popup
             if (e.target === e.currentTarget) {
-              setEditingVehicle(null); // Fecha o modal
+              setVehicle({} as Vehicle); // Fecha o modal
               setIsAdding(false); // Reseta o estado de adição
-              setSelectedBrand(""); // Reseta a marca selecionada
-              setSelectedModel(""); // Reseta o modelo selecionado
-              setAvailableYears([]); // Limpar anos disponíveis
             }
           }}>
           <div className="scroll-styled flex flex-col gap-8 bg-black/30 backdrop-blur-md p-6 text-white rounded-2xl shadow-2xl w-full max-h-[80vh] overflow-y-auto sm:w-2/3 max-w-2xl mx-4 sm:mx-0">
@@ -191,12 +133,16 @@ export default function Vehicles() {
                 <label className="block">Marca:</label>
                 <select 
                   className="w-full max-w-md p-2 rounded-full bg-white text-black" 
-                  value={selectedBrand}
-                  onChange={(e) => handleBrandChange(e.target.value)}
+                  value={vehicle?.brand}
+                  onChange={(e) => {
+                  const selectedBrand = e.target.value;
+                  setVehicle((prev) => prev ? { ...prev, brand: selectedBrand } : undefined);
+                  getDataVehicle({ brand: selectedBrand });
+                  }}
                 >
                   <option value="">Selecione a marca</option>
-                  {vehicleData.brands.map((brandData: VehicleBrand, index) => (
-                    <option key={index} value={brandData.brand}>{brandData.brand}</option>
+                  {availableVehicleData?.brand?.map((brandData, index) => (
+                  <option key={index} value={brandData}>{brandData}</option>
                   ))}
                 </select>
               </div>
@@ -205,12 +151,16 @@ export default function Vehicles() {
                 <label className="block">Modelo:</label>
                 <select 
                   className="w-full max-w-md p-2 rounded-full bg-white text-black" 
-                  value={selectedModel}
-                  onChange={(e) => handleModelChange(e.target.value)}
+                  value={vehicle?.model}
+                  onChange={(e) => {
+                  const selectedModel = e.target.value;
+                  setVehicle((prev) => prev ? { ...prev, model: selectedModel } : undefined);
+                  getDataVehicle({ model: selectedModel, brand: vehicle?.brand });
+                  }}
                 >
                   <option value="">Selecione o modelo</option>
-                  {availableModels.map((modelData, index) => (
-                    <option key={index} value={modelData.model}>{modelData.model}</option>
+                  {availableVehicleData?.model?.map((modelData, index) => (
+                  <option key={index} value={modelData}>{modelData}</option>
                   ))}
                 </select>
               </div>
@@ -219,65 +169,80 @@ export default function Vehicles() {
                 <label className="block">Ano:</label>
                 <select 
                   className="w-full max-w-md p-2 rounded-full bg-white text-black" 
-                  value={editingVehicle.year ?? ""}
-                  onChange={(e) => handleYearChange(parseInt(e.target.value))}
+                  value={vehicle?.year}
+                  onChange={(e) => {
+                  const selectedYear = Number(e.target.value);
+                  setVehicle((prev) => prev ? { ...prev, year: selectedYear } : undefined);
+                  getDataVehicle({ year: selectedYear, brand: vehicle?.brand, model: vehicle?.model });
+                  }}
                 >
                   <option value="">Selecione o ano</option>
-                  {availableYears.map((yearData, index) => (
-                    <option key={index} value={yearData.year}>{yearData.year}</option>
+                  {availableVehicleData?.year?.map((yearData, index) => (
+                  <option key={index} value={yearData}>{yearData}</option>
                   ))}
                 </select>
               </div>
               {/* Categoria */}
               <div className="flex flex-col sm:flex-row gap-2 bg-conecta-azul px-4 py-2 rounded-lg justify-between items-center align-middle w-full">
                 <label className="block">Categoria:</label>
-                <input 
-                  type="text" 
-                  readOnly
+                <select 
                   className="w-full max-w-md p-2 rounded-full bg-white text-black" 
-                  value={editingVehicle.category}
-                  onChange={(e) => setEditingVehicle({ ...editingVehicle, category: e.target.value })}
-                />
+                  value={vehicle?.category}
+                  onChange={(e) => {
+                  const selectedCategory = e.target.value;
+                  setVehicle((prev) => prev ? { ...prev, category: selectedCategory } : undefined);
+                  getDataVehicle({ category: selectedCategory, brand: vehicle?.brand, model: vehicle?.model, year: vehicle?.year });
+                  }}
+                >
+                  <option value="">Selecione a categoria</option>
+                  {availableVehicleData?.category?.map((categoryData, index) => (
+                  <option key={index} value={categoryData}>{categoryData}</option>
+                  ))}
+                </select>
               </div>
               {/* Motor */}
               <div className="flex flex-col sm:flex-row gap-2 bg-conecta-azul px-4 py-2 rounded-lg justify-between items-center align-middle w-full">
                 <label className="block">Motor:</label>
-                <input 
-                  type="text" 
-                  readOnly
+                <select 
                   className="w-full max-w-md p-2 rounded-full bg-white text-black" 
-                  value={editingVehicle.motor}
-                  onChange={(e) => setEditingVehicle({ ...editingVehicle, motor: e.target.value })}
-                />
+                  value={vehicle?.version}
+                  onChange={(e) => {
+                  const selectedVersion = e.target.value;
+                  setVehicle((prev) => prev ? { ...prev, version: selectedVersion } : undefined);
+                  getDataVehicle({ version: selectedVersion, brand: vehicle?.brand, model: vehicle?.model, year: vehicle?.year, category: vehicle?.category });
+                  }}
+                >
+                  <option value="">Selecione a versão</option>
+                  {availableVehicleData?.version?.map((versionData, index) => (
+                  <option key={index} value={versionData}>{versionData}</option>
+                  ))}
+                </select>
               </div>
               {/* Cor */}
-              <div className="flex flex-col sm:flex-row gap-2 bg-conecta-azul px-4 py-2 rounded-lg justify-between items-center align-middle w-full">
+              {/* <div className="flex flex-col sm:flex-row gap-2 bg-conecta-azul px-4 py-2 rounded-lg justify-between items-center align-middle w-full">
                 <label className="block">Cor:</label>
                 <input 
                   type="color" 
                   className="w-full max-w-md h-10 px-4 rounded-full bg-white text-black" 
-                  value={editingVehicle.color ?? "#000000"}
-                  onChange={(e) => setEditingVehicle({ ...editingVehicle, color: e.target.value })}
+                  value={vehicle.color ?? "#000000"}
+                  onChange={(e) => setVehicle((prev) => prev ? { ...prev, color: e.target.value } : undefined)}
                 />
-              </div>
+              </div> */}
             </div>
             <div className="flex flex-col sm:flex-row justify-center gap-2 items-center mt-4 w-full">
               {/** Verificação do formulário antes de habilitar o botão **/}
               <button 
-                className={`px-4 py-2 rounded ${selectedBrand && selectedModel && editingVehicle.year && editingVehicle.category && editingVehicle.motor && editingVehicle.color ? "bg-green-500 hover:bg-green-400 transition-colors text-white" : "bg-gray-400 text-gray-700 cursor-not-allowed"}`} 
-                onClick={() => handleSave(editingVehicle)}
-                disabled={!(selectedBrand && selectedModel && editingVehicle.year && editingVehicle.category && editingVehicle.motor && editingVehicle.color)}
+                className={`px-4 py-2 rounded ${vehicle ? "bg-green-500 hover:bg-green-400 transition-colors text-white" : "bg-gray-400 text-gray-700 cursor-not-allowed"}`} 
+                onClick={() => handleSave(vehicle)}
+                disabled={!(vehicle && vehicle.year && vehicle.category && vehicle.version )}
               >
                 {isAdding ? "Adicionar" : "Salvar"}
               </button>
               <button 
                 className="px-4 py-2 bg-red-500 hover:bg-red-400 transition-colors text-white rounded" 
                 onClick={() => {
-                  setEditingVehicle(null); // Fecha o modal
+                  setVehicle({} as Vehicle); // Fecha o modal
                   setIsAdding(false); // Reseta o estado de adição
-                  setSelectedBrand(""); // Reseta a marca selecionada
-                  setSelectedModel(""); // Reseta o modelo selecionado
-                  setAvailableYears([]); // Limpar anos disponíveis
                 }}
               >
                 Cancelar

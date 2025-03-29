@@ -21,7 +21,7 @@ export async function registerAction( state: { message: string } | undefined, fo
   const { password, username, name, typeUser, jwt } = validateField.data
 
 try {
-    const data = await postRequest('/v1/user-area/user/send-register-email', { name, username, password,profile_image: '',roles: typeUser, client_name: '', jwt });
+    const data = await postRequest('/v1/user-area/user/confirm-registration', { name, username, password,profile_image: '',roles: typeUser, client_name: '', jwt });
     console.log(data);
     return { message: "Login successful" };
   } catch (error) {

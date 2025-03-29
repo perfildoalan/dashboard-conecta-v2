@@ -15,7 +15,7 @@ export async function newPasswordAction(state: { message: string } | undefined, 
   const { password } = validateFields.data
 
   try {
-      const data = await postRequest('/v1/user-area/user/send-recovery-password-email', { password });
+      const data = await postRequest('/v1/user-area/user/confirm-recovery-password', { password });
       console.log(data);
       return { message: "Login successful" };
     } catch (error) {

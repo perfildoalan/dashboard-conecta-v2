@@ -1,15 +1,12 @@
 'use server'
 
+import { postRequest } from '@/dashboard/utils/postRequest';
 import {
   RegisterVehicleFormSchema,
-  RegisterVehicleFormState,
 } from '@/lib/registerVehicle'
-import { api } from '@/utils/api'
 
 export async function registerVehicleAction(
-  state: RegisterVehicleFormState,
-  formData: FormData,
-) {
+  state: { message: string } | undefined, formData: FormData): Promise<{ message: string } | undefined> {
   const validateField = RegisterVehicleFormSchema.safeParse({
     brand: formData.get('brand') as string,
     model: formData.get('model') as string,
@@ -20,29 +17,19 @@ export async function registerVehicleAction(
   })
 
   if (!validateField.success) {
-    return {
-      errors: validateField.error.flatten().fieldErrors,
-    }
+    return { message: "Isto nao é um email" };
   }
 
   const { brand, model, year, engine, typeVehicle, classVehicle } =
     validateField.data
 
-  api
-    .post('/registerVehicle', {
-      brand,
-      model,
-      year,
-      engine,
-      typeVehicle,
-      classVehicle,
-    })
-    .then(() => {
-      return { message: 'Register successful' }
-    })
-    .catch(() => {
-      return { error: 'Invalid data' }
-    })
+ try {
+     const data = await postRequest(`/v1/user-area/vehicle/register/${vehicle_id}`);
+     console.log(data);
+     return { message: "Login successful" };
+   } catch (error) {
+     console.error('Login failed', error);
+     return { message: "Login failed" };
+   }
 
-  return state
 }

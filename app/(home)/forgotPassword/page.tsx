@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { forgotPasswordAction } from "./forgotPassword.action";
+import Link from "next/link";
 
 const initialState = {
   message: "",
@@ -28,6 +29,7 @@ export default function ForgotPassword() {
           </div>
           <Button disabled={pending} type="submit" className="bg-conecta-azul text-white rounded-md p-2 w-full mt-1 font-medium text-lg">Enviar</Button>
         </form>
+        <p className=" font-medium text-base text-black/60"><Link href="/register" className="font-bold hover:text-black/80">Volte para o Login</Link></p>
     </div>
   )
 }
