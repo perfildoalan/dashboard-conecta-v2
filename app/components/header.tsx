@@ -1,5 +1,5 @@
 "use client"
-import { Bell, Settings, Search, Languages, Sun, Moon, CircleUserRound, UserIcon, UserRound, HomeIcon, CarIcon, MapIcon, LogOutIcon, EyeIcon, UserRoundPenIcon } from "lucide-react";
+import { Bell, Settings, Search, Languages, Sun, Moon, UserRound, LogOutIcon, EyeIcon, UserRoundPenIcon } from "lucide-react";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -15,7 +15,7 @@ import ConectaLogo from '@/ui/header/conecta-logo';
 import { SidebarProvider, SidebarMenuButton } from './ui/sidebar';
 
 export default function Header() {
-    const { setTheme, theme } = useTheme()
+    const { setTheme, resolvedTheme } = useTheme()
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -24,13 +24,13 @@ export default function Header() {
 
     return (
         <header>
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-3 z-[1000] md:gap-[5vw] justify-between justify-items-center items-center w-screen h-[80px] bg-header/90 backdrop-blur-sm shadow-[0px_8px_8px_rgba(0,0,0,0.10)]">
+            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-3 z-[1000] md:gap-[5vw] justify-between justify-items-center items-center w-screen h-[80px] bg-header/90 backdrop-blur-md shadow-[0px_8px_8px_rgba(0,0,0,0.10)]">
                 <div className='flex ml-4 gap-4 justify-start justify-self-start items-center'>
                     <SidebarProvider>
                         <SheetDemo/>
                     </SidebarProvider>
                     {mounted && (
-                        <ConectaLogo color={(theme === 'dark' ? '#70E5FF' : 'white')} className="justify-self-start block transition-all max-md:hidden duration-300 hover:opacity-50 cursor-pointer" />
+                        <ConectaLogo color={(resolvedTheme === 'dark' ? '#70E5FF' : 'white')} className="justify-self-start block transition-all max-md:hidden duration-300 hover:opacity-50 cursor-pointer" />
                     )}
                 </div>
                 <div className='flex flex-row max-md:col-span-2 relative max-sm:hidden justify-center justify-items-center items-center w-full max-w-[500px]'>
@@ -62,7 +62,7 @@ export default function Header() {
                                 </Button>
                             </DropdownMenuItem> 
                             <DropdownMenuItem asChild>
-                                <Button className='w-full h-full border-0' variant="default" size="icon" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
+                                <Button className='w-full h-full border-0' variant="default" size="icon" onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}>
                                     <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                                     <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                                     <span className="sr-only">Toggle theme</span>

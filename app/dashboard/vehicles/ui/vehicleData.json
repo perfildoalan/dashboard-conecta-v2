@@ -1,0 +1,114 @@
+{
+    "brands": [
+      {
+        "brand": "Chevrolet",
+        "models": [
+          {
+            "model": "Prisma",
+            "years": [
+              {
+                "year": 2011,
+                "category": "Sedã",
+                "engine_power": "1.4"
+              },
+              {
+                "year": 2012,
+                "category": "Sedã",
+                "engine_power": "1.4"
+              }
+            ]
+          },
+          {
+            "model": "Onix",
+            "years": [
+              {
+                "year": 2013,
+                "category": "Hatchback",
+                "engine_power": "1.0"
+              },
+              {
+                "year": 2014,
+                "category": "Hatchback",
+                "engine_power": "1.0"
+              },
+              {
+                "year": 2015,
+                "category": "Hatchback",
+                "engine_power": "1.4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "brand": "Ford",
+        "models": [
+          {
+            "model": "Fiesta",
+            "years": [
+              {
+                "year": 2010,
+                "category": "Hatchback",
+                "engine_power": "1.6"
+              },
+              {
+                "year": 2011,
+                "category": "Hatchback",
+                "engine_power": "1.6"
+              }
+            ]
+          },
+          {
+            "model": "Focus",
+            "years": [
+              {
+                "year": 2015,
+                "category": "Sedã",
+                "engine_power": "2.0"
+              },
+              {
+                "year": 2016,
+                "category": "Sedã",
+                "engine_power": "2.0"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "brand": "Volkswagen",
+        "models": [
+          {
+            "model": "Gol",
+            "years": [
+              {
+                "year": 2014,
+                "category": "Hatchback",
+                "engine_power": "1.0"
+              },
+              {
+                "year": 2015,
+                "category": "Hatchback",
+                "engine_power": "1.0"
+              }
+            ]
+          },
+          {
+            "model": "Polo",
+            "years": [
+              {
+                "year": 2018,
+                "category": "Hatchback",
+                "engine_power": "1.6"
+              },
+              {
+                "year": 2019,
+                "category": "Hatchback",
+                "engine_power": "1.6"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
