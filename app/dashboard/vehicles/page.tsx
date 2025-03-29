@@ -103,7 +103,10 @@ export default function Vehicles() {
               category={vehicle.category} 
               motor={vehicle.version} 
               onDelete={() => handleDelete(vehicle.id)}
-              onEdit={() => setVehicle(vehicle)}
+              onEdit={() => {
+              setVehicle(vehicle);
+              setIsAdding(true);
+              }}
             />
             ))}
         </div>
@@ -113,7 +116,7 @@ export default function Vehicles() {
             </button>
         </div>
       {/* Modal de adicionar/editar */}
-      {vehicle && (
+      {isAdding && (
         <div 
           className="fixed inset-0 flex items-center justify-center bg-black/50 z-auto"
           onClick={(e) => {
@@ -233,7 +236,7 @@ export default function Vehicles() {
               {/** Verificação do formulário antes de habilitar o botão **/}
               <button 
                 className={`px-4 py-2 rounded ${vehicle ? "bg-green-500 hover:bg-green-400 transition-colors text-white" : "bg-gray-400 text-gray-700 cursor-not-allowed"}`} 
-                onClick={() => handleSave(vehicle)}
+                onClick={() => vehicle && handleSave(vehicle)}
                 disabled={!(vehicle && vehicle.year && vehicle.category && vehicle.version )}
               >
                 {isAdding ? "Adicionar" : "Salvar"}

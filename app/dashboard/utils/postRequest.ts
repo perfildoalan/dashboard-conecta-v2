@@ -1,4 +1,4 @@
-'use sever'
+'use server'
 import { cookies } from 'next/headers'
 
 //eslint-disable-next-line
