@@ -114,7 +114,7 @@ export default function Trips() {
                   <TripCardMap title={trip.departure} mapData={trip.duration} size="w-full h-full" />
                   <TripCardMap title={trip.probability} mapData={trip.vehicle} size="w-full h-full" />
                   </div>
-                </div>
+              </div>
               <div className="flex flex-col justify-center gap-6 items-center mt-auto min-w-52 h-[28rem] rounded-2xl p-4">
                 <PencilIcon 
                   onClick={() => { setIsAdding(trip.id); setSelectedVehicle(trip.vehicle); }}
