@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import VehicleCard from "./ui/vehicle-card";
-import { ThemeProvider } from "@/components/theme-provider";
 import { LayoutGridIcon, ListIcon, PlusIcon } from "lucide-react";
 import { getRequest } from "../utils/getRequest";
 import { deleteRequest } from "../utils/deleteRequeste";
@@ -73,8 +72,8 @@ export default function Vehicles() {
 
   return (
     <>
-      <ThemeProvider>
-        <div className="flex w-full p-4 items-center justify-between">
+      
+        <div className="flex w-full min-w-[100rem] p-4 items-center justify-between">
           <h1 className="font-normal text-titlePage text-3xl">Veículos</h1>
           <div className="flex gap-4">
             <ListIcon
@@ -254,7 +253,6 @@ export default function Vehicles() {
           </div>
         </div>
       )}
-      </ThemeProvider>
     </>
   );
 }

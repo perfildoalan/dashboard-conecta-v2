@@ -169,14 +169,14 @@ const LegendContainer = () => (
     })
   
     return (
-      <div className="mt-[30px] mr-[50px] ml-[50px] mb-[30px] rounded-[10px] md:px-[20px] md:mr-0 md:ml-0">
+      <div className="">
         <MapContainer
           center={firstPosition}
-          zoom={18}
+          zoom={10}
           scrollWheelZoom={true}
           style={{
-            width: '100%',
-            height: 'calc(100vh - 400px)',
+            width: '10%',
+            height: 'calc(100vh - 4000px)',
             borderRadius: '10px',
           }}
         >
