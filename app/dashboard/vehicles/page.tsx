@@ -73,7 +73,7 @@ export default function Vehicles() {
   return (
     <>
       
-        <div className="flex w-full min-w-[100rem] p-4 items-center justify-between">
+        <div className="flex w-full p-4 items-center justify-between">
           <h1 className="font-normal text-titlePage text-3xl">Veículos</h1>
           <div className="flex gap-4">
             <ListIcon

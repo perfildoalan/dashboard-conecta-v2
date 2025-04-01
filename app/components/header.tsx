@@ -5,7 +5,7 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
-  } from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import { Button } from './ui/button';
 import { useTheme } from 'next-themes';
 import { useState, useEffect } from "react";
@@ -13,21 +13,34 @@ import BellCard from './bellCard';
 import { SheetDemo } from './sidebar';
 import ConectaLogo from '@/ui/header/conecta-logo';
 import { SidebarProvider, SidebarMenuButton } from './ui/sidebar';
+import Profile from "@/dashboard/profile/page";
 
 export default function Header() {
-    const { setTheme, resolvedTheme } = useTheme()
+    const { setTheme, resolvedTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
+    const [showProfile, setShowProfile] = useState(false);
 
     useEffect(() => {
         setMounted(true);
     }, []);
+
+    const handleClick = () => {
+        setShowProfile(!showProfile);
+    };
+
+    const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
+        const target = e.target as HTMLElement;
+        if (target.id === "modal") {
+            setShowProfile(false);
+        }
+    };
 
     return (
         <header>
             <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-3 z-[1000] md:gap-[5vw] justify-between justify-items-center items-center w-screen h-[80px] bg-header/90 backdrop-blur-md shadow-[0px_8px_8px_rgba(0,0,0,0.10)]">
                 <div className='flex ml-4 gap-4 justify-start justify-self-start items-center'>
                     <SidebarProvider>
-                        <SheetDemo/>
+                        <SheetDemo />
                     </SidebarProvider>
                     {mounted && (
                         <ConectaLogo color={(resolvedTheme === 'dark' ? '#70E5FF' : 'white')} className="justify-self-start block transition-all max-md:hidden duration-300 hover:opacity-50 cursor-pointer" />
@@ -35,7 +48,7 @@ export default function Header() {
                 </div>
                 <div className='flex flex-row max-md:col-span-2 relative max-sm:hidden justify-center justify-items-center items-center w-full max-w-[500px]'>
                     <input type="text" id="site-search" className="pl-4 pr-10 rounded-3xl bg-transparent text-headerItens text-lg focus:outline-none border-2 border-solid border-headerItens w-full" />
-                    <Search className='absolute right-4 transition-all cursor-pointer text-headerItens hover:opacity-50'/>
+                    <Search className='absolute right-4 transition-all cursor-pointer text-headerItens hover:opacity-50' />
                 </div>
                 <div className='flex flex-row justify-end justify-self-end gap-4 mr-4 items-center'>
                     <DropdownMenu>
@@ -57,10 +70,10 @@ export default function Header() {
                         <DropdownMenuContent>
                             <DropdownMenuItem asChild>
                                 <Button variant="default" size="icon" className='w-full h-full border-0' >
-                                    <Languages className='size-12'/>
+                                    <Languages className='size-12' />
                                     <span className="sr-only">Toggle theme</span>
                                 </Button>
-                            </DropdownMenuItem> 
+                            </DropdownMenuItem>
                             <DropdownMenuItem asChild>
                                 <Button className='w-full h-full border-0' variant="default" size="icon" onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}>
                                     <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
@@ -82,17 +95,17 @@ export default function Header() {
                                 <p className="flex justify-self-center text-lg font-semibold text-white mt-2">Nome Sobrenome</p>
                             </div>
                             <DropdownMenuItem z-50 asChild>
-                                <SidebarProvider>   
-                                    <SidebarMenuButton noLine className="w-full">
-                                        <EyeIcon className=""/>
+                                <SidebarProvider>
+                                    <SidebarMenuButton noLine className="w-full" onClick={handleClick}>
+                                        <EyeIcon className="" />
                                         <div className="align-middle font-regular">Visualizar</div>
                                     </SidebarMenuButton>
                                     <SidebarMenuButton noLine className="w-full">
-                                        <UserRoundPenIcon className=""/>
+                                        <UserRoundPenIcon className="" />
                                         <div className="align-middle font-regular">Editar</div>
                                     </SidebarMenuButton>
                                     <SidebarMenuButton noLine className="w-full">
-                                        <LogOutIcon className=""/>
+                                        <LogOutIcon className="" />
                                         <div className="align-middle font-regular">Sair</div>
                                     </SidebarMenuButton>
                                 </SidebarProvider>
@@ -101,6 +114,12 @@ export default function Header() {
                     </DropdownMenu>
                 </div>
             </div>
+            
+            {showProfile && (
+                <div id="modal" className="fixed inset-0 flex justify-center items-center z-50 bg-opacity-50 bg-gray-800" onClick={handleClose}>
+                    <Profile />
+                </div>
+            )}
         </header>
     )
 }
